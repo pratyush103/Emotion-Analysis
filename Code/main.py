@@ -8,6 +8,7 @@ import os
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from Model import TIMNET_Model
+from extract_feature import *
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -16,6 +17,7 @@ parser.add_argument('--mode', type=str, default="train")
 parser.add_argument('--model_path', type=str, default='./Models/')
 parser.add_argument('--result_path', type=str, default='./Results/')
 parser.add_argument('--test_path', type=str, default='./Test_Models/EMODB_46')
+parser.add_argument('--predict_path', type=str, default='OutPut/temp_audio.wav')
 parser.add_argument('--data', type=str, default='EMODB')
 parser.add_argument('--lr', type=float, default=0.001)
 parser.add_argument('--beta1', type=float, default=0.93)
@@ -69,4 +71,10 @@ if args.mode=="train":
     model.train(x_source, y_source)
 elif args.mode=="test":
     x_feats, y_labels = model.test(x_source, y_source, path=args.test_path)# x_feats and y_labels are test datas for t-sne
-  
+elif args.mode=="predict":
+    # model.load_weights('Models/EMOVO_46_2024-03-22_14-39-44/10-fold_weights_best_1.hdf5')
+    # audio = extract_feature.extract(args.predict_path)
+    audio = np.load('Code/MFCC/PRED_features.npy')
+    predictions = model.predict(np.array([audio]),'Models/EMOVO_46_2024-03-22_14-39-44/10-fold_weights_best_1.hdf5')
+    predicted_emotion = CLASS_LABELS[np.argmax(predictions[0])]
+    print(predictions)  

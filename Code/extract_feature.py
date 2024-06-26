@@ -6,7 +6,7 @@ from tqdm import tqdm
 from python_speech_features import *
 import librosa
 import librosa.display
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.utils import *
 import argparse
 from natsort import ns, natsorted
 parser = argparse.ArgumentParser()
@@ -115,8 +115,8 @@ SAVEE_LABEL =("angry","disgust", "fear", "happy", "neutral", "sad", "surprise")
 RAVDE_LABEL = ("angry", "calm", "disgust", "fear", "happy", "neutral","sad","surprise")
 IEMOCAP_LABEL = ("angry", "happy", "neutral", "sad")
 EMOVO_LABEL = ("angry", "disgust", "fear", "happy","neutral","sad","surprise")
-LABEL_DICT = {"CASIA":CASIA_LABEL,"EMODB":EMODB_LABEL,"IEMOCAP":IEMOCAP_LABEL,"EMOVO":EMOVO_LABEL,"SAVEE":SAVEE_LABEL,"RAVDE":RAVDE_LABEL}
-PATH_DICT = {"CASIA":"./CASIA_MFCC_88","EMODB":"./EMODB_MFCC_96","IEMOCAP":"./IEMOCAP_MFCC_310","EMOVO":"./EMOVO_MFCC_96","SAVEE":"./SAVEE_MFCC_130","RAVDE":"./RAVDE_MFCC_110"}
+LABEL_DICT = {"CASIA":CASIA_LABEL,"EMODB":EMODB_LABEL,"IEMOCAP":IEMOCAP_LABEL,"EMOVO":EMOVO_LABEL,"SAVEE":SAVEE_LABEL,"RAVDE":RAVDE_LABEL, "Output":EMOVO_LABEL}
+PATH_DICT = {"CASIA":"./CASIA_MFCC_88","EMODB":"./EMODB_MFCC_96","IEMOCAP":"./IEMOCAP_MFCC_310","EMOVO":"./EMOVO_MFCC_96","SAVEE":"./SAVEE_MFCC_130","RAVDE":"./RAVDE_MFCC_110", "Output":"./Output"}
 
 # First step: extract speech feature
 extract_feature(data_name=args.data_name, feature_type_="MFCC", mean_signal_length=args.mean_signal_length, class_labels=LABEL_DICT[args.data_name])

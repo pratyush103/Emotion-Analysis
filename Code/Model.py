@@ -175,3 +175,18 @@ class TIMNET_Model(Common_Model):
         print("Average ACC:",avg_accuracy/self.args.split_fold)
         self.acc = avg_accuracy/self.args.split_fold
         return x_feats, y_labels
+
+def predict(self, x, path):
+    i = 1
+    kfold = KFold(n_splits=self.args.split_fold, shuffle=True, random_state=self.args.random_seed)
+    predicted_labels = []
+
+    for _, test in kfold.split(x):
+        self.create_model()
+        weight_path = path + '/' + str(self.args.split_fold) + "-fold_weights_best_" + str(i) + ".hdf5"
+        self.model.load_weights(weight_path)
+        y_pred_best = self.model.predict(x[test])
+        predicted_labels.append(np.argmax(y_pred_best, axis=1))
+        i += 1
+
+    return predicted_labels
